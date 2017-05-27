@@ -37,4 +37,16 @@ public class Artist {
     public String getMbid() {
         return mbid;
     }
+
+    @Override
+    public String toString() {
+        return "Artist:{\n" +
+                "Name:\"" + getName() + "\"\n" +
+                "Bio:\"" + getBio() + "\"\n" +
+                "Url:\"" + getUrl() + "\"\n" +
+                "Images Uri:\"" + getImagesUri() + "\"\n" +
+                "Mbid:\"" + getMbid() + "\"\n" +
+                "}";
+    }
+
 }

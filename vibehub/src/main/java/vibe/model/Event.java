@@ -8,7 +8,7 @@ import java.util.function.Supplier;
  * Created by artur on 04/04/2017.
  */
 public class Event {
-    private final Supplier<Artist> artist;//TO TEST
+    private final Supplier<Artist> artist;
     private final String artistName;
     private final String eventDate;
     private final String tour;
@@ -26,8 +26,8 @@ public class Event {
         this.setListId = setListId;
     }
 
-    public String getArtist() {
-
+    public Artist getArtist() {
+        return artist.get();
     }
 
     public String getArtistName() {
@@ -56,14 +56,14 @@ public class Event {
 
     @Override
     public String toString() {
-        return "Event{" +
-                "" +
-                "artistName='" + artistName + '\'' +
-                "eventDate='" + eventDate + '\'' +
-                "tour='" + tour + '\'' +
-                "tracksNames" + Arrays.toString(tracksNames) +
-                "tracks=" + tracks +
-                "setListId='" + setListId + '\'' +
+        return "Event{\n" +
+                "Artist=\"" + getArtist() + "\"\n" +
+                "Artist Name=\"" + getArtistName() + "\"\n" +
+                "Event Date=\"" + getEventDate() + "\"\n" +
+                "Tour='" + getTour() + "\"\n" +
+                "Tracks Names" + Arrays.toString(getTracksNames()) + "\n" +
+                "Tracks=" + getTracks() + "\n" +
+                "SetListId=\"" + getSetListId() + "\"\n" +
                 "}";
     }
 }

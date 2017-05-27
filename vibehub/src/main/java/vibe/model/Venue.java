@@ -23,9 +23,9 @@ public class Venue {
 
     @Override
     public String toString() {
-        return "Venue{" +
-                "name='" + name + '\'' +
-                "events=" + events +
+        return "Venue{\n" +
+                "name=\"" + getName() + "\",\n" +
+                "events=" + getEvents() + "\n" +
                 "}";
     }
 }

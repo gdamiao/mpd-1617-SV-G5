@@ -1,37 +1,27 @@
 package main.java.vibe.data.dto;
 
 
-import java.util.Arrays;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by artur on 04/04/2017.
  */
 public class VenueDto {
+    @SerializedName("@name")
+    private final String venueName;
+    @SerializedName("@id")
+    private final String venueId;
 
-    private final String name;
-
-    private final EventDto[] events;
-
-    public VenueDto(String name, EventDto[] events) {
-        this.name = name;
-        this.events = events;
+    public VenueDto(String venueName, String venueId) {
+        this.venueName = venueName;
+        this.venueId = venueId;
     }
 
-    public String getName() {
-        return name;
+    public String getVenueName() {
+        return venueName;
     }
 
-    public EventDto[] getEvents() { return events; }
-
-    @Override
-    public String toString() {
-        return "VenueDto{" +
-                "name='" + name + '\'' +
-                ", events" + Arrays.toString(events) +
-                "}";
-    }
-
-    public static <R, T> VenueDto valueof(String line) {
-        return null;
+    public String getVenueId() {
+        return venueId;
     }
 }

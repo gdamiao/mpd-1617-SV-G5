@@ -1,12 +1,9 @@
 package main.java.vibe.data.dto;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import main.java.vibe.model.Artist;
-import main.java.vibe.model.Track;
+import com.google.gson.*;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -14,35 +11,25 @@ import java.util.List;
  * Created by artur on 04/04/2017.
  */
 public class EventDto {
-
-    private final String artistName;
+    private final JsonElement artist;
+    private final JsonElement sets;
+    @SerializedName("@eventDate")
     private final String eventDate;
+    @SerializedName("@tour")
     private final String tour;
-    private final String[] tracksNames;
+    @SerializedName("@id")
     private final String setListId;
 
-    public EventDto(String artistName, String eventDate, String tour, JsonElement sets, String setListId) {
-        this.artistName = artistName;
+    public EventDto(JsonElement artist, String eventDate, String tour, JsonElement sets, String setListId) {
+        this.artist = artist;
         this.eventDate = eventDate;
         this.tour = tour;
         this.setListId = setListId;
-        if(sets.isJsonPrimitive())
-            tracksNames = new String[0];
-        else {
-            List<String> res = new ArrayList<>();
-            JsonElement set = sets.getAsJsonObject().get("set");
-            if(set.isJsonObject()) insertSongsInto(set, res);
-            else {
-                set
-                        .getAsJsonArray()
-                        .forEach(elem -> insertSongsInto(elem, res));
-            }
-            tracksNames = res.toArray(new String[res.size()]);
-        }
+        this.sets = sets;
     }
 
     public String getArtistName() {
-        return artistName;
+        return artist.getAsJsonObject().get("@name").getAsString();
     }
 
     public String getEventDate() {
@@ -53,8 +40,25 @@ public class EventDto {
         return tour;
     }
 
+    public String getSetListId() {
+        return setListId;
+    }
+
     public String[] getTracksNames(){
-        return tracksNames;
+        if(sets.isJsonPrimitive())
+            return new String[0];
+        else {
+            List<String> res = new ArrayList<>();
+            JsonElement set = sets.getAsJsonObject().get("set");
+            if(set.isJsonObject()) insertSongsInto(set, res);
+            else {
+                set
+                        .getAsJsonArray()
+                        .forEach(elem -> insertSongsInto(elem, res));
+            }
+            String[] ret = res.toArray(new String[res.size()]);
+            return ret;
+        }
     }
 
     private void insertSongsInto(JsonElement elem, List<String> res) {
@@ -63,26 +67,11 @@ public class EventDto {
             res.add(songToString(song));
         } else {
             JsonArray songs = song.getAsJsonArray();
-            songs.forEach(this::songToString);
+            songs.forEach(s -> res.add(songToString(s)));
         }
     }
 
     private String songToString(JsonElement song) {
-        return song.getAsJsonObject().get("@name").getAsString();
-    }
-
-    public String getSetListId() {
-        return setListId;
-    }
-
-    @Override
-    public String toString() {
-        return "EventDto{" +
-                "artistName='" + artistName + '\'' +
-                ", eventDate='" + eventDate + '\'' +
-                ", tour='" + tour + '\'' +
-                ", tracksNames" + Arrays.toString(tracksNames) +
-                ", setListId='" + setListId + '\'' +
-                "}";
+        return "\"" + song.getAsJsonObject().get("@name").getAsString() + "\"";
     }
 }

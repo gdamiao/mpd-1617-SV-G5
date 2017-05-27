@@ -42,8 +42,8 @@ public class VibeService {
 
     private Venue dtoToVenue(VenueDto dto) {
         return new Venue(
-                dto.getName(),
-                map(asList(dto.getEvents()), this::dtoToEvent)
+                dto.getVenueName(),
+                getEvents(dto.getVenueId())
         );
     }
 
@@ -54,11 +54,11 @@ public class VibeService {
         );
     }
 
-    private Event dtoToEvent(EventDto dto) {//TO TEST
+    private Event dtoToEvent(EventDto dto) {
         String artistName = dto.getArtistName();
         String[] tracksNames = dto.getTracksNames();
         return new Event(
-                getArtist(artistName),
+                () -> getArtist(artistName),
                 artistName,
                 dto.getEventDate(),
                 dto.getTour(),
@@ -74,11 +74,11 @@ public class VibeService {
 
     private Artist dtoToArtist(LfmArtistDto dto) {
         return new Artist(
-                dto.getName(),
-                dto.getBio(),
-                dto.getUrl(),
-                dto.getImagesUri(),
-                dto.getMbid()
+                dto.getArtistDto().getName(),
+                dto.getArtistDto().getBio().getSummary(),
+                dto.getArtistDto().getUrl(),
+                dto.getArtistDto().getImagesUri(),
+                dto.getArtistDto().getMbid()
         );
     }
 
@@ -98,13 +98,13 @@ public class VibeService {
 
     private Track dtoToTrack(LfmTrackDto dto) {
         return new Track(
-                dto.getName(),
-                dto.getArtistName(),
-                dto.getAlbumName(),
-                dto.getTrackUrl(),
-                dto.getImagesUrl(),
-                dto.getAlbumUrl(),
-                dto.getDuration()
+                dto.getTrackDto().getName(),
+                dto.getTrackDto().getArtistName(),
+                dto.getTrackDto().getAlbumName(),
+                dto.getTrackDto().getTrackUrl(),
+                dto.getTrackDto().getImagesUrl(),
+                dto.getTrackDto().getAlbumUrl(),
+                dto.getTrackDto().getDuration()
         );
     }
 }

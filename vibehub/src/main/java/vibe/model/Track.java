@@ -55,14 +55,14 @@ public class Track {
 
     @Override
     public String toString() {
-        return "Track{" +
-                "name='" + name + '\'' +
-                "artistName='" + artistName + '\'' +
-                "albumName='" + albumName + '\'' +
-                "trackUrl='" + trackUrl + '\'' +
-                "imagesUrl" + Arrays.toString(imagesUrl) +
-                "albumUrl='" + albumUrl + '\'' +
-                "duration=" + duration +
+        return "Track:{\n" +
+                "Name:\"" + getName() + "\"\n" +
+                "Artist Name:\"" + getArtistName() + "\"\n" +
+                "Album Name:\"" + getAlbumName() + "\"\n" +
+                "Track Url:\"" + getTrackUrl() + "\"\n" +
+                "Images Url:" + Arrays.toString(getImagesUrl()) + "\n" +
+                "Album Url:\"" + getAlbumUrl() + "\"\n" +
+                "Duration:" + getDuration() + "\n" +
                 "}";
     }
 }
